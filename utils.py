@@ -8,3 +8,16 @@ def label_int2str(row, dataset):
         train_df['label_name'] = train_df['label'].apply(label_int2str, args=(banking['train'],))
     """
     return dataset.features["label"].int2str(row)
+
+
+def tokenize(batch, tokenizer):
+    """
+    Tokenize the text using the tokenizer.
+    Example:
+        banking = load_dataset("banking77")
+        tokenizer = DistilBertTokenizer.from_pretrained(model_ckpt)
+        encoded_train = banking["train"].map(
+            tokenize, batched=True, batch_size=None, fn_kwargs={"tokenizer": tokenizer}
+        )
+    """
+    return tokenizer(batch["text"], padding=True, truncation=True)
