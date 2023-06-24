@@ -1,3 +1,6 @@
+import torch
+
+
 def label_int2str(row, dataset):
     """
     Convert integer label to string label according to the dataset.
@@ -21,3 +24,16 @@ def tokenize(batch, tokenizer):
         )
     """
     return tokenizer(batch["text"], padding=True, truncation=True)
+
+
+def extract_hidden_states(batch, model, tokenizer, device="cpu"):
+    """
+    Extract the hidden states from the encoder model.
+    """
+    inputs = {
+        k: v.to(device) for k, v in batch.items() if k in tokenizer.model_input_names
+    }
+    with torch.no_grad():
+        last_hidden_state = model(**inputs).last_hidden_state
+
+    return {"hidden_state": last_hidden_state[:, 0].cpu().numpy()}
