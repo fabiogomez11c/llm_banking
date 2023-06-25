@@ -1,3 +1,4 @@
 **.pyc
 .banking/
 .ipynb_checkpoints/
+distilbert-base-uncased-finetuned-banking/
