@@ -29,6 +29,13 @@ def tokenize(batch, tokenizer):
 def extract_hidden_states(batch, model, tokenizer, device="cpu"):
     """
     Extract the hidden states from the encoder model.
+    Example:
+        banking = load_dataset("banking77")
+        tokenizer = DistilBertTokenizer.from_pretrained(model_ckpt)
+        encoded_banking = banking.map(
+            tokenize, batched=True, batch_size=None, fn_kwargs={"tokenizer": tokenizer}
+        )
+        encoded_hidden = encoded_banking.map(extract_hidden_states, batched=True, fn_kwargs={'model': model, 'tokenizer': tokenizer, 'device': device})
     """
     inputs = {
         k: v.to(device) for k, v in batch.items() if k in tokenizer.model_input_names
