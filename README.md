@@ -1,4 +1,6 @@
-LLM fine tuned for banking sentences classification.
+<p align="center">
+  <a href="https://github.com/fabiogomez11c/llm_banking" ><img src="streamlit.png" alt="app"></a>
+</p>
 
 To run the project you should create a virtual environment and install the requirements.txt file.
 
