@@ -1,6 +1,6 @@
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
-from datasets import load_dataset
 import torch
+import pandas as pd
 import streamlit as st
 import json
 
@@ -17,7 +17,7 @@ model = AutoModelForSequenceClassification.from_pretrained(
     model_name, num_labels=num_labels
 )
 
-st.text_input("Text here . . .", key="banking")
+st.text_input("Type here you claim:", key="banking")
 
 # prediction part
 text = st.session_state.banking
@@ -31,3 +31,7 @@ if len(text) > 0:
     arg_max = torch.argmax(softmax, dim=1)
     predicted_label = labels[arg_max]
     st.text(f"Predicted label: {predicted_label}")
+
+    # plot of the probabilities with bar chart
+    df = pd.DataFrame(softmax.detach().numpy()[0], index=labels)
+    st.bar_chart(df)
